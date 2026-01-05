@@ -9,7 +9,7 @@ class WordPicker
       words_array.select! do |word|
         word.length >= 5 && word.length <= 12 
       end
-      words_array.sample
+      @word = words_array.sample
     end
   end
 end
