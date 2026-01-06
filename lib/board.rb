@@ -1,11 +1,12 @@
 require 'io/console'
 
-
 class Board
+  attr_accessor :turns_left, :correct_array, :incorrect_array
+
   def initialize
     @turns_left = 8
-    @incorrect_letters = []
-    @correct_letters = []
+    @incorrect_array = []
+    @correct_array = ["_"]
   end
 
   def print_board
@@ -13,8 +14,8 @@ class Board
     board = [
       "     ",
       "You have #{@turns_left} turns left",
-      "Incorrect Letters : #{@incorrect_letters}",
-      "Correct Letters : #{@correct_letters}"
+      "Incorrect Letters : #{@incorrect_array}",
+      "Correct Letters : #{@correct_array}"
     ]
     board.map! { |line| line.center(width) }
     puts board
@@ -25,12 +26,12 @@ class Board
   end
 
   def incorrect_letters(letter)
-    @incorrect_letters << letter
-    @incorrect_letters.uniq!
+    @incorrect_array << letter
+    @incorrect_array.uniq!
   end
 
   def correct_letters(letter, position)
-    @correct_letters[position] = letter.to_s
-    @correct_letters.map! { |word| word.nil? ? "_" : word}
+    @correct_array[position] = letter.to_s
+    @correct_array.map! { |word| word.nil? ? "_" : word}
   end
 end
