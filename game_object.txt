@@ -1,1 +1,0 @@
-{"word":"accomplished","incorrect_words":["u","r"],"correct_words":["a","_","_","o","_","_","_","i","_","_","e","_"],"turns_left":6}

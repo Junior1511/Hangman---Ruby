@@ -1,5 +1,5 @@
 class WordPicker
-  attr_reader :word
+  attr_accessor :word
   
   def initialize
     @word = nil 

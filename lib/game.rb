@@ -8,6 +8,21 @@ class Game
   def initialize
     @board = Board.new
     @word_picker = WordPicker.new
+    load_game
+  end
+
+  def load_game
+    puts "Would you like to load a previous game?"
+    puts "Please type Y or N"
+    answer = gets.chomp.downcase
+    if answer == "y"
+      object_file = File.read("game_object.json")
+      game_object = JSON.parse(object_file)
+      @word_picker.word = game_object["word"]
+      @board.incorrect_array = game_object["incorrect_words"]
+      @board.correct_array = game_object["correct_words"]
+      @board.turns_left = game_object["turns_left"]
+    end
   end
 
   def save_game
@@ -21,17 +36,19 @@ class Game
         :correct_words => @board.correct_array,
         :turns_left => @board.turns_left
       }
-      File.open("game_object.txt", "w") do |file|
-        file.puts(game_object.to_json)
-      end
-
+      File.write("game_object.json", game_object.to_json)
+      exit
     end
   end
 
   def turns
-    until @board.turns_left == 0 || @board.correct_array.include?("_") == false
-      save_game
+    if @correct_array == ["_"]
       @board.correct_letters("_", (@word_picker.word.length - 1))
+    end
+    until @board.turns_left == 0 || @board.correct_array.include?("_") == false
+      if @board.turns_left <= 7
+        save_game
+      end
       @board.print_board
       puts "Type a letter"
       user_input = gets.chomp.downcase
